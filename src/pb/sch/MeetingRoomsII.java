@@ -16,12 +16,12 @@ public class MeetingRoomsII {
         }
     }
 
-    public int minMeetingRooms(Interval[] intervals){
+    public int minMeetingRooms(Interval[] intervals) {
         Arrays.sort(intervals, Comparator.comparingInt(a -> a.s));
         PriorityQueue<Integer> pq = new PriorityQueue<>();
         pq.add(intervals[0].e);
-        for(Interval i : intervals){
-            if(!pq.isEmpty() && i.s >= pq.peek()){
+        for (Interval i : intervals) {
+            if (!pq.isEmpty() && i.s >= pq.peek()) {
                 pq.poll();
             }
             pq.add(i.e);

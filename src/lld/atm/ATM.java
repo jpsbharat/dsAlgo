@@ -9,27 +9,29 @@ public class ATM {
     private State currentState;
     private CardProcessor cardProcessor;
     private CashInventory cashInventory;
+
     public ATM(CardProcessor cardProcessor, CashInventory cashInventory) {
         this.running = false;
-        this.currentState = State.IDLE;;
+        this.currentState = State.IDLE;
+        ;
         this.cardProcessor = cardProcessor;
         this.cashInventory = cashInventory;
     }
 
-    private void init(){
+    private void init() {
         this.cashInventory.init();
         this.cashInventory.init();
     }
 
-    public void start(){
+    public void start() {
         this.init();
         this.running = true;
-        while(running){
+        while (running) {
 
         }
     }
 
-    public void stop(){
+    public void stop() {
         this.running = false;
     }
 

@@ -18,13 +18,13 @@ class Bank {
         return name;
     }
 
-    public void addAccount(Account account){
-        if(!accountMap.containsKey(account.getId())){
+    public void addAccount(Account account) {
+        if (!accountMap.containsKey(account.getId())) {
             accountMap.put(account.getId(), account);
         }
     }
 
-    public Account getAccount(long id){
+    public Account getAccount(long id) {
         return accountMap.get(id);
     }
 }

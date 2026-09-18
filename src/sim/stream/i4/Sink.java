@@ -1,8 +1,11 @@
 package sim.stream.i4;
 
-import java.util.function.*;
+import java.util.function.Consumer;
 
 interface Sink<T> extends Consumer<T> {
-    default void begin(long size) {}
-    default void end() {}
+    default void begin(long size) {
+    }
+
+    default void end() {
+    }
 }

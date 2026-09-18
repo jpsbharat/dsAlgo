@@ -9,7 +9,7 @@ public class BankRepo {
 
     private static final Map<String, Bank> bankMap = new ConcurrentHashMap<>();
 
-    static{
+    static {
         Bank bank = new Bank("HDFC");
         Account ac = new Account(123, "ABC", bank.getName());
         ac.addBalance(1000000);
@@ -32,11 +32,11 @@ public class BankRepo {
         bankMap.put(bank.getName(), bank);
     }
 
-    public static long getBalance(String bankName, long acNumber){
+    public static long getBalance(String bankName, long acNumber) {
         Bank bank = bankMap.get(bankName);
-        if(bank != null){
+        if (bank != null) {
             Account ac = bank.getAccount(acNumber);
-            if(ac != null){
+            if (ac != null) {
                 return ac.getBalance();
             } else {
                 System.out.println("Bank doesnt exist...");
@@ -48,11 +48,11 @@ public class BankRepo {
         }
     }
 
-    public static boolean withdraw(String bankName, long acNumber, long amt){
+    public static boolean withdraw(String bankName, long acNumber, long amt) {
         Bank bank = bankMap.get(bankName);
-        if(bank != null){
+        if (bank != null) {
             Account ac = bank.getAccount(acNumber);
-            if(ac != null){
+            if (ac != null) {
                 ac.withdraw(amt);
             } else {
                 System.out.println("Bank doesnt exist...");

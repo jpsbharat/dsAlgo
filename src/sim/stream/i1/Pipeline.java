@@ -2,7 +2,7 @@ package sim.stream.i1;
 
 public class Pipeline<I, O> {
 
-    public interface  Stage<I, O>{
+    public interface Stage<I, O> {
         O process(I input);
     }
 
