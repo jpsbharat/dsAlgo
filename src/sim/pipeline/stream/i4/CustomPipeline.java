@@ -1,4 +1,4 @@
-package sim.stream.i4;
+package sim.pipeline.stream.i4;
 
 import java.util.Iterator;
 import java.util.function.BinaryOperator;

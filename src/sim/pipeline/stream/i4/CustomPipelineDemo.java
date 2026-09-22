@@ -1,4 +1,4 @@
-package sim.stream.i4;
+package sim.pipeline.stream.i4;
 
 import java.util.List;
 

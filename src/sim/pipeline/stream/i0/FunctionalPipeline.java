@@ -1,4 +1,4 @@
-package sim.stream.i0;
+package sim.pipeline.stream.i0;
 
 import java.util.function.Function;
 

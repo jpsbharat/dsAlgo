@@ -1,4 +1,4 @@
-package sim.stream.i1;
+package sim.pipeline.stream.i1;
 
 public class Pipeline<I, O> {
 
