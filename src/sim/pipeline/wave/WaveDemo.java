@@ -1,6 +1,5 @@
 package sim.pipeline.wave;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class WaveDemo {

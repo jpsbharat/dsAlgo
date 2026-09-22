@@ -7,7 +7,7 @@ public class Wave<T> {
     private static int count;
     private final Point<?, T> prevPoint;
 
-    private Wave(Iterator<T> vibrator){
+    private Wave(Iterator<T> vibrator) {
         final int id = count++;
         this.prevPoint = new Point<T, T>(vibrator) {
             @Override
@@ -24,7 +24,7 @@ public class Wave<T> {
         };
     }
 
-    private Wave(Point<?, T> prevPoint){
+    private Wave(Point<?, T> prevPoint) {
         this.prevPoint = prevPoint;
     }
 
@@ -71,12 +71,12 @@ public class Wave<T> {
 
     public void generate(int n) {
         Point medium = this.prevPoint;
-        while(medium.prevPoint != null){
+        while (medium.prevPoint != null) {
             medium = medium.prevPoint;
         }
 
         Vibration vibration = new Vibration() {
-            public  void happen(Object effect){
+            public void happen(Object effect) {
                 System.out.println("Requester finally received the vibration -> " + effect);
             }
         };
@@ -87,7 +87,7 @@ public class Wave<T> {
 
         Iterator vibrator = medium.getVibrator();
         System.out.println("Vibration has been triggered");
-        while(vibrator.hasNext()){
+        while (vibrator.hasNext()) {
             vibration.happen(vibrator.next());
         }
 
