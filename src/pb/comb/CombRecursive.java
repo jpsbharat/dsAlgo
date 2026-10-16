@@ -40,20 +40,20 @@ public class CombRecursive {
         // Include the current element
         current.add(elements.get(index));
         combinationWithRepetition(elements, index, current, k, result);
-        current.remove(current.size() - 1);
+        current.removeLast();
         // Exclude the current element
         combinationWithRepetition(elements, index + 1, current, k, result);
     }
 
     public static <T> List<List<T>> combinationWithoutRepetition(List<T> elements, int k) {
-        List<List<T>> result = new java.util.ArrayList<>();
+        List<List<T>> result = new ArrayList<>();
         combinationWithoutRepetition(elements, 0, new ArrayList<>(), k, result);
         return result;
     }
 
     private static <T> void combinationWithoutRepetition(List<T> elements, int index, List<T> current, int k, List<List<T>> result) {
         if(current.size() == k){
-            result.add(new java.util.ArrayList<>(current));
+            result.add(new ArrayList<>(current));
             return;
         }
         if(index >= elements.size()){
@@ -62,7 +62,7 @@ public class CombRecursive {
         // Include the current element
         current.add(elements.get(index));
         combinationWithoutRepetition(elements, index + 1, current, k, result);
-        current.remove(current.size() - 1);
+        current.removeLast();
         // Exclude the current element
         combinationWithoutRepetition(elements, index + 1, current, k, result);
     }
