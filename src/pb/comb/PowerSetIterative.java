@@ -32,7 +32,6 @@ public class PowerSetIterative {
         int[] indices = new int[n];
         while (true) {
             copy(elems, indices, result);
-
             int i = n - 1;
             while (i >= 0) {
                 indices[i]++;
@@ -55,7 +54,6 @@ public class PowerSetIterative {
                 if(unique(indices, elems.size())) {
                     copy(elems, indices, k, result);
                 }
-
                 int i = k - 1;
                 while (i >= 0) {
                     indices[i]++;
@@ -78,7 +76,6 @@ public class PowerSetIterative {
             int[] indices = new int[k];
             while (true) {
                 copy(elems, indices, k, result);
-
                 int i = k - 1;
                 while (i >= 0) {
                     indices[i]++;

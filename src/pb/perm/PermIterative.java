@@ -29,7 +29,6 @@ public class PermIterative {
         int[] indices = new int[k];
         while (true) {
             copy(elements, indices, k, result);
-
             int i = k - 1;
             while (i >= 0) {
                 indices[i]++;
@@ -52,7 +51,6 @@ public class PermIterative {
             if (unique(indices, n)) {
                 copy(elements, indices, k, result);
             }
-
             int i = k - 1;
             while (i >= 0) {
                 indices[i]++;

@@ -30,7 +30,6 @@ public class CombIterative {
         int[] indices = new int[k];
         while (true) {
             copy(elements, indices, k, result);
-
             int i = k - 1;
             while (i >= 0 && indices[i] == n - 1) {
                 i--;
@@ -54,7 +53,6 @@ public class CombIterative {
         }
         while (true) {
             copy(elements, indices, k, result);
-
             int i = k - 1;
             while (i >= 0 && indices[i] == n - k + i) {
                 i--;

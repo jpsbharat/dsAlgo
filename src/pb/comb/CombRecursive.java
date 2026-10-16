@@ -24,7 +24,7 @@ public class CombRecursive {
     }
 
     public static <T> List<List<T>> combinationWithRepetition(List<T> elements, int k) {
-        List<List<T>> result = new java.util.ArrayList<>();
+        List<List<T>> result = new ArrayList<>();
         combinationWithRepetition(elements, 0, new ArrayList<>(), k, result);
         return result;
     }

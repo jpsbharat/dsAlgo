@@ -25,7 +25,7 @@ public class CombIterativeCumRecursive {
     }
 
     public static <T> List<List<T>> combinationWithRepetition(List<T> elements, int k) {
-        List<List<T>> result = new java.util.ArrayList<>();
+        List<List<T>> result = new ArrayList<>();
         combinationWithRepetition(elements, 0, new ArrayList<>(), k, result);
         return result;
     }
@@ -47,14 +47,14 @@ public class CombIterativeCumRecursive {
     }
 
     public static <T> List<List<T>> combinationWithoutRepetition(List<T> elements, int k) {
-        List<List<T>> result = new java.util.ArrayList<>();
+        List<List<T>> result = new ArrayList<>();
         combinationWithoutRepetition(elements, 0, new ArrayList<>(), k, result);
         return result;
     }
 
     private static <T> void combinationWithoutRepetition(List<T> elements, int index, List<T> current, int k, List<List<T>> result) {
         if(current.size() == k){
-            result.add(new java.util.ArrayList<>(current));
+            result.add(new ArrayList<>(current));
             return;
         }
         if(index >= elements.size()){

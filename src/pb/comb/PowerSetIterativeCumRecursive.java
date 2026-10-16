@@ -30,7 +30,6 @@ public class PowerSetIterativeCumRecursive {
 
     private static <T> void powerSet(List<T> elems, int index, List<T> current, List<List<T>> result) {
         result.add(new ArrayList<>(current));
-
         for (int i = index; i < elems.size(); i++) {
             current.add(elems.get(i));
             powerSet(elems, i + 1, current, result);
@@ -47,7 +46,6 @@ public class PowerSetIterativeCumRecursive {
 
     private static <T> void powerSetPermutations(List<T> elems, boolean[] processed, List<T> current, List<List<T>> result) {
         result.add(new ArrayList<>(current));
-
         for (int i = 0; i < elems.size(); i++) {
             if (!processed[i]) {
                 current.add(elems.get(i));
