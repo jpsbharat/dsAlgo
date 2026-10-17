@@ -1,8 +1,6 @@
 package pb.sw;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 public class MinMaxSubArray {
 
@@ -115,6 +113,81 @@ public class MinMaxSubArray {
             imap.put(c, r);
             result = Math.max(result, r - l + 1);
         }
+        return result;
+    }
+
+    public int lengthOfLongestSubstring(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+
+        // Map to keep track of the count of characters in the current window
+        Map<Character, Integer> windowCounts = new HashMap<>();
+
+        int maxLength = 0;
+        int left = 0; // Left boundary of the window
+
+        // Expand the right boundary of the window
+        for (int right = 0; right < s.length(); right++) {
+            char rightChar = s.charAt(right);
+            windowCounts.put(rightChar, windowCounts.getOrDefault(rightChar, 0) + 1);
+
+            // While the current character is a duplicate, shrink the window from the left
+            while (windowCounts.get(rightChar) > 1) {
+                char leftChar = s.charAt(left);
+                windowCounts.put(leftChar, windowCounts.get(leftChar) - 1);
+                left++; // Move the left boundary forward
+            }
+
+            // Calculate the maximum window size seen so far
+            maxLength = Math.max(maxLength, right - left + 1);
+        }
+
+        return maxLength;
+    }
+
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> result = new ArrayList<>();
+        if (s == null || p == null || s.length() < p.length()) {
+            return result;
+        }
+
+        // 1. Build the frequency map for the target string p
+        Map<Character, Integer> targetCounts = new HashMap<>();
+        for (char c : p.toCharArray()) {
+            targetCounts.put(c, targetCounts.getOrDefault(c, 0) + 1);
+        }
+
+        // Map to track the frequencies in our active sliding window
+        Map<Character, Integer> windowCounts = new HashMap<>();
+        int left = 0;
+        int fixedSize = p.length();
+
+        // 2. Slide the fixed window across string s
+        for (int right = 0; right < s.length(); right++) {
+            char rightChar = s.charAt(right);
+            windowCounts.put(rightChar, windowCounts.getOrDefault(rightChar, 0) + 1);
+
+            // If the window size exceeds the fixed limit, remove the leftmost character
+            if (right - left + 1 > fixedSize) {
+                char leftChar = s.charAt(left);
+                windowCounts.put(leftChar, windowCounts.get(leftChar) - 1);
+
+                // Clean up the map key if the frequency hits 0 to keep maps clean
+                if (windowCounts.get(leftChar) == 0) {
+                    windowCounts.remove(leftChar);
+                }
+                left++; // Slide the left boundary forward by exactly 1 position
+            }
+
+            // 3. When the window hits the exact target size, compare maps directly
+            if (right - left + 1 == fixedSize) {
+                if (windowCounts.equals(targetCounts)) {
+                    result.add(left);
+                }
+            }
+        }
+
         return result;
     }
 }
