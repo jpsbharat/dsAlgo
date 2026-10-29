@@ -1,6 +1,7 @@
 package pb.dp.td;
 
 import java.util.*;
+import java.util.function.BiFunction;
 
 public class SectorPartitioningInCluster {
 
@@ -14,6 +15,14 @@ public class SectorPartitioningInCluster {
         printClusterMetrics(contiguousResult);
         contiguousResult = findMaxCostSector(sectorCosts, k);
         printClusterMetrics(contiguousResult);
+
+
+        contiguousResult = findOptimalCostSector(sectorCosts, k, (a, b) -> a < b, Long.MAX_VALUE);
+        printClusterMetrics(contiguousResult);
+
+
+        contiguousResult = findOptimalCostSector(sectorCosts, k, (a, b) -> a > b, Long.MIN_VALUE);
+        printClusterMetrics(contiguousResult);
     }
 
     public static void main(String[] args) {
@@ -22,6 +31,26 @@ public class SectorPartitioningInCluster {
         test(sectorCosts, 3);
         sectorCosts = Arrays.asList(1, 2, 3, 2, 5);
         test(sectorCosts, 3);
+    }
+
+    public static List<List<Integer>> findOptimalCostSector(List<Integer> sectorCosts, int k, BiFunction<Long, Long, Boolean> costComparison, long extremeValue) {
+        int n = sectorCosts.size();
+        if (n == 0 || k <= 0) return new ArrayList<>();
+
+        // Edge case: If clusters exceed or equal elements, isolate each element
+        if (k >= n) {
+            return createPartitionForExceedingK(sectorCosts, k);
+        }
+
+        // Caches using primitive primitive-packed Long keys
+        Map<Long, Long> memo = new HashMap<>();
+        Map<Long, Integer> splitTracker = new HashMap<>();
+
+        // Invoke recursive solver targeting the structural sector costs list
+        findOptimalCost(0, k, sectorCosts, memo, splitTracker, costComparison, extremeValue);
+        System.out.println("memo -> " + memo);
+        System.out.println("splitTracker -> " + splitTracker);
+        return createPartition(sectorCosts, splitTracker, k);
     }
 
     public static List<List<Integer>> findMinCostSector(List<Integer> sectorCosts, int k) {
@@ -202,5 +231,41 @@ public class SectorPartitioningInCluster {
             System.out.println("  Cluster " + (i + 1) + ": " + cluster + " | Dynamic Cost (First+Last): " + cost);
         }
         System.out.println("  >> Total Minimal Partition Cost: " + totalSystemCost);
+    }
+
+    public static long findOptimalCost(int index, int k, List<Integer> sectorCosts, Map<Long, Long> memo,
+                                       Map<Long, Integer> tracker, BiFunction<Long, Long, Boolean> costComparison, long extremeValue) {
+        int n = sectorCosts.size();
+        // Base Case 1: Final cluster must take everything left over from current index to the end
+        if (k == 1) {
+            return (long) sectorCosts.get(index) + sectorCosts.get(n - 1);
+        }
+
+        // Base Case 2: Out of boundaries (not enough elements left to populate downstream clusters)
+        if (n - index < k) {
+            return extremeValue;
+        }
+
+        long optimalCost = extremeValue;
+        int bestSplit = index + 1;
+
+        // Scan valid ranges while preserving room for the remaining (k - 1) bins
+        int maxValidSplitIndex = n - (k - 1);
+        for (int i = index + 1; i <= maxValidSplitIndex; i++) {
+            long currentClusterCost = (long) sectorCosts.get(index) + sectorCosts.get(i - 1);
+            long futureClustersCost = findOptimalCost(i, k - 1, sectorCosts, memo, tracker, costComparison, extremeValue);
+            long totalStateCost = currentClusterCost + futureClustersCost;
+
+            if (costComparison.apply(totalStateCost, optimalCost)) {
+                optimalCost = totalStateCost;
+                bestSplit = i;
+            }
+        }
+
+        long stateKey = encodeState(index, k);
+        memo.put(stateKey, optimalCost);
+        tracker.put(stateKey, bestSplit);
+
+        return optimalCost;
     }
 }
